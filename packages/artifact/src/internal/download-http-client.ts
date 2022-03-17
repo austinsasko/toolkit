@@ -108,7 +108,8 @@ export class DownloadHttpClient {
           await this.downloadIndividualFile(
             index,
             currentFileToDownload.sourceLocation,
-            currentFileToDownload.targetPath
+            currentFileToDownload.targetPath,
+            currentFileToDownload.extract
           )
 
           if (core.isDebug()) {
@@ -144,7 +145,8 @@ export class DownloadHttpClient {
   private async downloadIndividualFile(
     httpClientIndex: number,
     artifactLocation: string,
-    downloadPath: string
+    downloadPath: string,
+    extract: boolean
   ): Promise<void> {
     let retryCount = 0
     const retryLimit = getRetryLimit()
@@ -246,10 +248,19 @@ export class DownloadHttpClient {
         // Instead of using response.readBody(), response.message is a readableStream that can be directly used to get the raw body contents
         try {
           const isGzipped = isGzip(response.message.headers)
-          await this.pipeResponseToFile(response, destinationStream, isGzipped)
+          if (extract) {
+            if (isGzipped) { 
+              const gunzip = true
+            } else {
+              const gunzip = false
+            }
+          } else {
+            const gunzip = false
+          }
+          await this.pipeResponseToFile(response, destinationStream, gunzip)
 
           if (
-            isGzipped ||
+            gunzip ||
             isAllBytesReceived(
               response.message.headers['content-length'],
               await getFileSize(downloadPath)
