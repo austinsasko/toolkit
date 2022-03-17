@@ -148,7 +148,8 @@ describe('Search', () => {
       artifact1Name,
       artifactContainerEntries,
       testDownloadPath,
-      false
+      false,
+      true
     )
 
     expect(specification.rootDownloadLocation).toEqual(testDownloadPath)
@@ -241,7 +242,8 @@ describe('Search', () => {
       artifact1Name,
       artifactContainerEntries,
       testDownloadPath,
-      false
+      false,
+      true
     )
 
     expect(specification.rootDownloadLocation).toEqual(testDownloadPath)
@@ -339,6 +341,7 @@ describe('Search', () => {
       artifact1Name,
       artifactContainerEntries,
       testDownloadPath,
+      true,
       true
     )
 
@@ -448,6 +451,7 @@ describe('Search', () => {
       artifact1Name,
       artifactContainerEntries,
       testDownloadPath,
+      true,
       true
     )
 
@@ -549,4 +553,115 @@ describe('Search', () => {
     expect(specification.emptyFilesToCreate.length).toEqual(1)
     expect(specification.emptyFilesToCreate).toContain(item6ExpectedTargetPath)
   })
+  
+  it('Download Specification - dont extract files', () => {
+    const testDownloadPath = path.join('some', 'destination', 'folder')
+
+    const specification = getDownloadSpecification(
+      artifact1Name,
+      artifactContainerEntries,
+      testDownloadPath,
+      true,
+      false
+    )
+
+    expect(specification.rootDownloadLocation).toEqual(
+      path.join(testDownloadPath, artifact1Name)
+    )
+    expect(specification.filesToDownload.length).toEqual(5)
+
+    const item1ExpectedTargetPath = path.join(
+      testDownloadPath,
+      artifact1Name,
+      'file1.txt'
+    )
+    const item2ExpectedTargetPath = path.join(
+      testDownloadPath,
+      artifact1Name,
+      'file2.txt'
+    )
+    const item3ExpectedTargetPath = path.join(
+      testDownloadPath,
+      artifact1Name,
+      'dir1',
+      'file3.txt'
+    )
+    const item4ExpectedTargetPath = path.join(
+      testDownloadPath,
+      artifact1Name,
+      'dir1',
+      'dir2',
+      'dir3',
+      'dir4',
+      'file4.txt'
+    )
+    const item5ExpectedTargetPath = path.join(
+      testDownloadPath,
+      artifact1Name,
+      'dir1',
+      'dir2',
+      'dir3',
+      'dir4',
+      'file5.txt'
+    )
+    const item6ExpectedTargetPath = path.join(
+      testDownloadPath,
+      artifact1Name,
+      'dir1',
+      'dir2',
+      'dir3',
+      'dir4',
+      'file6.txt'
+    )
+
+    const targetLocations = specification.filesToDownload.map(
+      item => item.targetPath
+    )
+    expect(targetLocations).toContain(item1ExpectedTargetPath)
+    expect(targetLocations).toContain(item2ExpectedTargetPath)
+    expect(targetLocations).toContain(item3ExpectedTargetPath)
+    expect(targetLocations).toContain(item4ExpectedTargetPath)
+    expect(targetLocations).toContain(item5ExpectedTargetPath)
+
+    for (const downloadItem of specification.filesToDownload) {
+      if (downloadItem.targetPath === item1ExpectedTargetPath) {
+        expect(downloadItem.sourceLocation).toEqual(
+          createContentLocation(file1Path)
+        )
+      } else if (downloadItem.targetPath === item2ExpectedTargetPath) {
+        expect(downloadItem.sourceLocation).toEqual(
+          createContentLocation(file2Path)
+        )
+      } else if (downloadItem.targetPath === item3ExpectedTargetPath) {
+        expect(downloadItem.sourceLocation).toEqual(
+          createContentLocation(file3Path)
+        )
+      } else if (downloadItem.targetPath === item4ExpectedTargetPath) {
+        expect(downloadItem.sourceLocation).toEqual(
+          createContentLocation(file4Path)
+        )
+      } else if (downloadItem.targetPath === item5ExpectedTargetPath) {
+        expect(downloadItem.sourceLocation).toEqual(
+          createContentLocation(file5Path)
+        )
+      } else {
+        throw new Error('this should never be reached')
+      }
+    }
+
+    expect(specification.directoryStructure.length).toEqual(3)
+    expect(specification.directoryStructure).toContain(
+      path.join(testDownloadPath, artifact1Name)
+    )
+    expect(specification.directoryStructure).toContain(
+      path.join(testDownloadPath, dir1Path)
+    )
+    expect(specification.directoryStructure).toContain(
+      path.join(testDownloadPath, dir4Path)
+    )
+
+    expect(specification.emptyFilesToCreate.length).toEqual(1)
+    expect(specification.emptyFilesToCreate).toContain(item6ExpectedTargetPath)
+  })
+  
 })
