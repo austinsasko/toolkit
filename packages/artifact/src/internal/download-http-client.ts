@@ -250,15 +250,8 @@ export class DownloadHttpClient {
           const isGzipped = isGzip(response.message.headers)
           // check if the extract parameter is true, which by default it will be, and if so determine if the file is decompressable and decompress it. 
           // if extract parameter is set to be false, don't even check if its a compressed file, just download the file as-is
-          if (extract) {
-            if (isGzipped) { 
-              const gunzip = true
-            } else {
-              const gunzip = false
-            }
-          } else {
-            const gunzip = false
-          }
+
+          const gunzip = (isGzipped && extract) ? true : false
           await this.pipeResponseToFile(response, destinationStream, gunzip)
 
           if (
