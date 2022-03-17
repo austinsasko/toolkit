@@ -39,7 +39,7 @@ export function getDownloadSpecification(
   artifactEntries: ContainerEntry[],
   downloadPath: string,
   includeRootDirectory: boolean,
-  extractArtifact: boolean || true
+  extractArtifact: boolean
 ): DownloadSpecification {
   // use a set for the directory paths so that there are no duplicates
   const directories = new Set<string>()
