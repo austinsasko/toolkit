@@ -14,9 +14,6 @@ export interface DownloadSpecification {
   // individual files that need to be downloaded as part of the artifact
   filesToDownload: DownloadItem[],
   
-  // zipped artifacts (currently all artifacts are zipped on upload), will not be extracted on download when this is false
-  extract: boolean
-  
 }
 
 export interface DownloadItem {
@@ -25,6 +22,9 @@ export interface DownloadItem {
 
   // Information about where the file should be downloaded to
   targetPath: string
+  
+  // zipped artifacts (currently all artifacts are zipped on upload), will not be extracted on download when this is false
+  extract: boolean
 }
 
 /**
@@ -50,8 +50,7 @@ export function getDownloadSpecification(
       : downloadPath,
     directoryStructure: [],
     emptyFilesToCreate: [],
-    filesToDownload: [],
-    extract: extractArtifact
+    filesToDownload: []
   }
 
   for (const entry of artifactEntries) {
@@ -81,7 +80,8 @@ export function getDownloadSpecification(
         } else {
           specifications.filesToDownload.push({
             sourceLocation: entry.contentLocation,
-            targetPath: filePath
+            targetPath: filePath,
+            extract: extractArtifact
           })
         }
       }
