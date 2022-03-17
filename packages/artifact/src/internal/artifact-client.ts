@@ -32,7 +32,7 @@ export interface ArtifactClient {
     name: string,
     files: string[],
     rootDirectory: string,
-    options?: UploadOptions
+    options?: UploadOptions,
   ): Promise<UploadResponse>
 
   /**
@@ -41,18 +41,21 @@ export interface ArtifactClient {
    * @param name the name of the artifact being downloaded
    * @param path optional path that denotes where the artifact will be downloaded to
    * @param options extra options that allow for the customization of the download behavior
+   * @param extractArtifact optional boolean that denotes whether the compressed artifact will be extracted
    */
   downloadArtifact(
     name: string,
     path?: string,
-    options?: DownloadOptions
+    options?: DownloadOptions,
+    extractArtifact?: boolean
   ): Promise<DownloadResponse>
 
   /**
    * Downloads all artifacts associated with a run. Because there are multiple artifacts being downloaded, a folder will be created for each one in the specified or default directory
    * @param path optional path that denotes where the artifacts will be downloaded to
+   * @param extractArtifact optional boolean that denotes whether the compressed artifact will be extracted
    */
-  downloadAllArtifacts(path?: string): Promise<DownloadResponse[]>
+  downloadAllArtifacts(path?: string, extractArtifact?: boolean): Promise<DownloadResponse[]>
 }
 
 export class DefaultArtifactClient implements ArtifactClient {
@@ -157,7 +160,8 @@ Note: The size of downloaded zips can differ significantly from the reported siz
   async downloadArtifact(
     name: string,
     path?: string | undefined,
-    options?: DownloadOptions | undefined
+    options?: DownloadOptions | undefined,
+    extractArtifact?: boolean | true
   ): Promise<DownloadResponse> {
     const downloadHttpClient = new DownloadHttpClient()
 
@@ -191,7 +195,8 @@ Note: The size of downloaded zips can differ significantly from the reported siz
       name,
       items.value,
       path,
-      options?.createArtifactFolder || false
+      options?.createArtifactFolder || false,
+      extractArtifact || true
     )
 
     if (downloadSpecification.filesToDownload.length === 0) {
@@ -219,7 +224,8 @@ Note: The size of downloaded zips can differ significantly from the reported siz
   }
 
   async downloadAllArtifacts(
-    path?: string | undefined
+    path?: string | undefined,
+    extractArtifact?: boolean | true
   ): Promise<DownloadResponse[]> {
     const downloadHttpClient = new DownloadHttpClient()
 
@@ -254,7 +260,8 @@ Note: The size of downloaded zips can differ significantly from the reported siz
         currentArtifactToDownload.name,
         items.value,
         path,
-        true
+        true,
+        extractArtifact || true,
       )
       if (downloadSpecification.filesToDownload.length === 0) {
         core.info(
