@@ -12,7 +12,11 @@ export interface DownloadSpecification {
   emptyFilesToCreate: string[]
 
   // individual files that need to be downloaded as part of the artifact
-  filesToDownload: DownloadItem[]
+  filesToDownload: DownloadItem[],
+  
+  // zipped artifacts (currently all artifacts are zipped on upload), will not be extracted on download when this is false
+  extract: boolean
+  
 }
 
 export interface DownloadItem {
@@ -34,7 +38,8 @@ export function getDownloadSpecification(
   artifactName: string,
   artifactEntries: ContainerEntry[],
   downloadPath: string,
-  includeRootDirectory: boolean
+  includeRootDirectory: boolean,
+  extractArtifact: boolean
 ): DownloadSpecification {
   // use a set for the directory paths so that there are no duplicates
   const directories = new Set<string>()
@@ -45,7 +50,8 @@ export function getDownloadSpecification(
       : downloadPath,
     directoryStructure: [],
     emptyFilesToCreate: [],
-    filesToDownload: []
+    filesToDownload: [],
+    extract: extractArtifact
   }
 
   for (const entry of artifactEntries) {
