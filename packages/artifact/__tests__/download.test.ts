@@ -130,7 +130,8 @@ describe('Download Tests', () => {
     const items: DownloadItem[] = []
     items.push({
       sourceLocation: `${configVariables.getRuntimeUrl()}_apis/resources/Containers/13?itemPath=my-artifact%2FFileA.txt`,
-      targetPath
+      targetPath,
+      true
     })
 
     await expect(
@@ -153,7 +154,8 @@ describe('Download Tests', () => {
     const items: DownloadItem[] = []
     items.push({
       sourceLocation: `${configVariables.getRuntimeUrl()}_apis/resources/Containers/13?itemPath=my-artifact%2FFileB.txt`,
-      targetPath
+      targetPath,
+      true
     })
 
     await expect(
@@ -177,7 +179,8 @@ describe('Download Tests', () => {
       const items: DownloadItem[] = []
       items.push({
         sourceLocation: `${configVariables.getRuntimeUrl()}_apis/resources/Containers/13?itemPath=my-artifact%2FFileC.txt`,
-        targetPath
+        targetPath,
+        true
       })
 
       await expect(
@@ -201,7 +204,8 @@ describe('Download Tests', () => {
     const items: DownloadItem[] = []
     items.push({
       sourceLocation: `${configVariables.getRuntimeUrl()}_apis/resources/Containers/13?itemPath=my-artifact%2FFileD.txt`,
-      targetPath
+      targetPath,
+      true
     })
 
     await expect(
@@ -224,7 +228,8 @@ describe('Download Tests', () => {
     const items: DownloadItem[] = []
     items.push({
       sourceLocation: `${configVariables.getRuntimeUrl()}_apis/resources/Containers/13?itemPath=my-artifact%2FFileD.txt`,
-      targetPath
+      targetPath,
+      true
     })
 
     await expect(
