@@ -131,7 +131,7 @@ describe('Download Tests', () => {
     items.push({
       sourceLocation: `${configVariables.getRuntimeUrl()}_apis/resources/Containers/13?itemPath=my-artifact%2FFileA.txt`,
       targetPath,
-      true
+      extract: true
     })
 
     await expect(
@@ -155,7 +155,7 @@ describe('Download Tests', () => {
     items.push({
       sourceLocation: `${configVariables.getRuntimeUrl()}_apis/resources/Containers/13?itemPath=my-artifact%2FFileB.txt`,
       targetPath,
-      true
+      extract: true
     })
 
     await expect(
@@ -180,7 +180,7 @@ describe('Download Tests', () => {
       items.push({
         sourceLocation: `${configVariables.getRuntimeUrl()}_apis/resources/Containers/13?itemPath=my-artifact%2FFileC.txt`,
         targetPath,
-        true
+        extract: true
       })
 
       await expect(
@@ -205,7 +205,7 @@ describe('Download Tests', () => {
     items.push({
       sourceLocation: `${configVariables.getRuntimeUrl()}_apis/resources/Containers/13?itemPath=my-artifact%2FFileD.txt`,
       targetPath,
-      true
+      extract: true
     })
 
     await expect(
@@ -229,7 +229,7 @@ describe('Download Tests', () => {
     items.push({
       sourceLocation: `${configVariables.getRuntimeUrl()}_apis/resources/Containers/13?itemPath=my-artifact%2FFileD.txt`,
       targetPath,
-      true
+      extract: true
     })
 
     await expect(
