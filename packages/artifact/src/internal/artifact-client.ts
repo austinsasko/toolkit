@@ -164,7 +164,7 @@ Note: The size of downloaded zips can differ significantly from the reported siz
     name: string,
     path?: string | undefined,
     options?: DownloadOptions | undefined,
-    extractArtifact: boolean = true
+    extractArtifact: true
   ): Promise<DownloadResponse> {
     const downloadHttpClient = new DownloadHttpClient()
 
@@ -228,7 +228,7 @@ Note: The size of downloaded zips can differ significantly from the reported siz
 
   async downloadAllArtifacts(
     path?: string | undefined,
-    extractArtifact: boolean = true
+    extractArtifact: true
   ): Promise<DownloadResponse[]> {
     const downloadHttpClient = new DownloadHttpClient()
 
