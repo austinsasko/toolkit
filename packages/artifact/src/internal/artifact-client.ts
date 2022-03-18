@@ -32,7 +32,7 @@ export interface ArtifactClient {
     name: string,
     files: string[],
     rootDirectory: string,
-    options?: UploadOptions,
+    options?: UploadOptions
   ): Promise<UploadResponse>
 
   /**
@@ -55,7 +55,10 @@ export interface ArtifactClient {
    * @param path optional path that denotes where the artifacts will be downloaded to
    * @param extractArtifact optional boolean that denotes whether the compressed artifact will be extracted
    */
-  downloadAllArtifacts(path?: string, extractArtifact?: boolean): Promise<DownloadResponse[]>
+  downloadAllArtifacts(
+    path?: string,
+    extractArtifact?: boolean
+  ): Promise<DownloadResponse[]>
 }
 
 export class DefaultArtifactClient implements ArtifactClient {
@@ -261,7 +264,7 @@ Note: The size of downloaded zips can differ significantly from the reported siz
         items.value,
         path,
         true,
-        extractArtifact || true,
+        extractArtifact || true
       )
       if (downloadSpecification.filesToDownload.length === 0) {
         core.info(

@@ -553,7 +553,7 @@ describe('Search', () => {
     expect(specification.emptyFilesToCreate.length).toEqual(1)
     expect(specification.emptyFilesToCreate).toContain(item6ExpectedTargetPath)
   })
-  
+
   it('Download Specification - dont extract files', () => {
     const testDownloadPath = path.join('some', 'destination', 'folder')
 
@@ -663,5 +663,4 @@ describe('Search', () => {
     expect(specification.emptyFilesToCreate.length).toEqual(1)
     expect(specification.emptyFilesToCreate).toContain(item6ExpectedTargetPath)
   })
-  
 })

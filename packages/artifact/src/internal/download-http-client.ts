@@ -248,10 +248,10 @@ export class DownloadHttpClient {
         // Instead of using response.readBody(), response.message is a readableStream that can be directly used to get the raw body contents
         try {
           const isGzipped = isGzip(response.message.headers)
-          // check if the extract parameter is true, which by default it will be, and if so determine if the file is decompressable and decompress it. 
+          // check if the extract parameter is true, which by default it will be, and if so determine if the file is decompressable and decompress it.
           // if extract parameter is set to be false, don't even check if its a compressed file, just download the file as-is
 
-          const gunzip = (isGzipped && extract) ? true : false
+          const gunzip = isGzipped && extract ? true : false
           await this.pipeResponseToFile(response, destinationStream, gunzip)
 
           if (

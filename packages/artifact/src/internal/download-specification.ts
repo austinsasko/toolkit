@@ -12,8 +12,7 @@ export interface DownloadSpecification {
   emptyFilesToCreate: string[]
 
   // individual files that need to be downloaded as part of the artifact
-  filesToDownload: DownloadItem[],
-  
+  filesToDownload: DownloadItem[]
 }
 
 export interface DownloadItem {
@@ -22,7 +21,7 @@ export interface DownloadItem {
 
   // Information about where the file should be downloaded to
   targetPath: string
-  
+
   // zipped artifacts (currently all artifacts are zipped on upload), will not be extracted on download when this is false
   extract: boolean
 }
