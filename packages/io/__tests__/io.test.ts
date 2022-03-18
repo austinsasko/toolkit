@@ -342,13 +342,8 @@ describe('rmRF', () => {
       worked = false
     }
 
-    if (os.platform() === 'win32') {
-      expect(worked).toBe(false)
-      await assertExists(testPath)
-    } else {
-      expect(worked).toBe(true)
-      await assertNotExists(testPath)
-    }
+    expect(worked).toBe(true)
+    await assertNotExists(testPath)
 
     await fd.close()
     await io.rmRF(testPath)
