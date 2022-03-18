@@ -33,6 +33,7 @@ export interface DownloadItem {
  * @param artifactEntries a set of container entries that describe that files that make up an artifact
  * @param downloadPath the path where the artifact will be downloaded to
  * @param includeRootDirectory specifies if there should be an extra directory (denoted by the artifact name) where the artifact files should be downloaded to
+ * @param extractArtifact specifies whether the file should be extracted, if its compressed/gzipped
  */
 export function getDownloadSpecification(
   artifactName: string,
